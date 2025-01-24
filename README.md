@@ -1,8 +1,9 @@
 # ESTsoftCamp
 
 ## 📚 Today I Learned (TIL)
-이스트소프트 프론티어 iOS 부트캠프에서
-매일매일 배운 내용을 기록하는 **"Today I Learned" (TIL)** 저장소입니다.  
+이스트소프트 프론티어 iOS 부트캠프에서<br>매일매일 배운 내용을 기록하는 **"Today I Learned" (TIL)** 저장소입니다.  
+
+<br>
 
 ## ⚡ Shortcut
 ### TIL
@@ -11,6 +12,8 @@
 ### Archive
 - [메모리 구조](./Archive/메모리%20구조.md)
 - [ARC(Auto Reference Counting)](./Archive/ARC(Auto%20Reference%20Counting).md)
+
+<br>
 
 ## 📂 디렉토리 구조
 ```
