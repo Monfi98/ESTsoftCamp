@@ -17,7 +17,7 @@
 
 ## 📂 디렉토리 구조
 ```
-TIL/
+ESTsoftCamp/
 ├── Archive/                # 이론과 개념 정리
 │   ├── 메모리 구조.md
 │   ├── ARC(Auto Reference Counting).md
