@@ -16,24 +16,22 @@ class UseCaseImpl: UseCase {
   }
   
   func addReflection(reflection: Reflection) {
-    print(#function)
+    repository.createReflection(reflection)
   }
 
   func getReflection(stringDate: String) -> Reflection {
-    print(#function)
-    return Reflection(date: "2024-05-12", content: "test content")
+    return repository.getReflectionByDate(Date())
   }
 
   func updateReflection(reflection: Reflection) {
-    print(#function)
+    repository.updateReflection(reflection)
   }
 
   func deleteReflection(stringDate: String) {
-    print(#function)
+    repository.deleteReflection(date: Date())
   }
 
   func listAllReflections() -> [Reflection] {
-    print(#function)
-    return []
+    return repository.readAllReflections()
   }
 }
