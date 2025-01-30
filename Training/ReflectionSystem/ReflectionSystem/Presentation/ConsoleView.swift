@@ -34,9 +34,7 @@ class ConsoleView {
       
       print("회고 내용을 입력하세요:", terminator: " ")
       let inputContent = readLine() ?? ""
-      
-      let newReflection = Reflection(date: inputDate, content: inputContent)
-      useCase.addReflection(reflection: newReflection)
+      useCase.addReflection(stringDate: inputDate, content: inputContent)
     default:
       break
     }

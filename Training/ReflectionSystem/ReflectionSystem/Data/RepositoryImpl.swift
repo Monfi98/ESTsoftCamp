@@ -9,34 +9,34 @@ import Foundation
 
 final class RepositoryImpl: Repository {
   
-  private var reflections: [String: Reflection] = [:]
+  private var reflections: [Date: Reflection] = [:]
 
   func createReflection(_ reflection: Reflection) throws {
-    print("RepositoryImpl: \(#function)")
+    print("Impl: \(#function)")
     
-    let key = reflection.date.yyyyMMddString
+    let key = reflection.date
     
     if reflections[key] != nil {
-      throw DomainError.dataAlreadyExists(key)
+      throw DomainError.dataAlreadyExists(key.yyyyMMddString)
     }
     
     reflections[key] = reflection
   }
 
   func getReflectionByDate(_ date: Date) throws -> Reflection {
-    print(#function)
+    print("Impl: \(#function)")
     
-    let key = date.yyyyMMddString
+    let key = date
     
     if let reflection = reflections[key] {
       return reflection
     } else {
-      throw DomainError.dataNotFound(key)
+      throw DomainError.dataNotFound(key.yyyyMMddString)
     }
   }
   
   func readAllReflections() throws -> [Reflection] {
-    print(#function)
+    print("Impl: \(#function)")
     
     if reflections.isEmpty {
       throw DomainError.noDataStored
@@ -48,27 +48,26 @@ final class RepositoryImpl: Repository {
   }
 
   func updateReflection(_ reflection: Reflection) throws {
-    print(#function)
+    print("Impl: \(#function)")
     
-    let key = reflection.date.yyyyMMddString
+    let key = reflection.date
     
     if reflections[key] == nil {
-      throw DomainError.dataNotFound(key)
+      throw DomainError.dataNotFound(key.yyyyMMddString)
     }
     
     reflections[key] = reflection
   }
 
   func deleteReflection(date: Date) throws {
-    print(#function)
+    print("Impl: \(#function)")
     
-    let key = date.yyyyMMddString
+    let key = date
     
     if let reflection = reflections[key] {
       reflections.removeValue(forKey: key)
     } else {
-      throw DomainError.dataNotFound(key)
+      throw DomainError.dataNotFound(key.yyyyMMddString)
     }
-    
   }
 }

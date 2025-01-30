@@ -15,23 +15,53 @@ class UseCaseImpl: UseCase {
     self.repository = repository
   }
   
-  func addReflection(reflection: Reflection) {
-    repository.createReflection(reflection)
+  func addReflection(stringDate: String, content: String) {
+    do {
+      let newReflection = Reflection(
+        date: stringDate.toDate!,
+        content: content
+      )
+      try repository.createReflection(newReflection)
+    } catch {
+      print(error.localizedDescription)
+    }
   }
 
-  func getReflection(stringDate: String) -> Reflection {
-    return repository.getReflectionByDate(Date())
+  func getReflection(stringDate: String) -> Reflection? {
+    do {
+      return try repository.getReflectionByDate(Date())
+    } catch {
+      print(error.localizedDescription)
+      return nil
+    }
   }
 
-  func updateReflection(reflection: Reflection) {
-    repository.updateReflection(reflection)
+  func updateReflection(stringDate: String, content: String) {
+    do {
+      let newReflection = Reflection(
+        date: stringDate.toDate!,
+        content: content
+      )
+      try repository.updateReflection(newReflection)
+    } catch {
+      print(error.localizedDescription)
+    }
   }
 
   func deleteReflection(stringDate: String) {
-    repository.deleteReflection(date: Date())
+    do {
+      try repository.deleteReflection(date: Date())
+    } catch {
+      print(error.localizedDescription)
+    }
   }
 
-  func listAllReflections() -> [Reflection] {
-    return repository.readAllReflections()
+  func listAllReflections() -> [Reflection]? {
+    do {
+      return try repository.readAllReflections()
+    } catch {
+      print(error.localizedDescription)
+      return nil
+    }
   }
 }
