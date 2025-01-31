@@ -22,6 +22,7 @@ class UseCaseImpl: UseCase {
         content: content
       )
       try repository.createReflection(newReflection)
+      print("회고가 추가되었습니다.")
     } catch {
       print(error.localizedDescription)
     }
@@ -29,7 +30,7 @@ class UseCaseImpl: UseCase {
 
   func getReflection(stringDate: String) -> Reflection? {
     do {
-      return try repository.getReflectionByDate(Date())
+      return try repository.getReflectionByDate(stringDate.toDate!)
     } catch {
       print(error.localizedDescription)
       return nil
@@ -43,6 +44,7 @@ class UseCaseImpl: UseCase {
         content: content
       )
       try repository.updateReflection(newReflection)
+      print("회고가 수정되었습니다.")
     } catch {
       print(error.localizedDescription)
     }
@@ -50,7 +52,8 @@ class UseCaseImpl: UseCase {
 
   func deleteReflection(stringDate: String) {
     do {
-      try repository.deleteReflection(date: Date())
+      try repository.deleteReflection(date: stringDate.toDate!)
+      print("회고가 삭제되었습니다.")
     } catch {
       print(error.localizedDescription)
     }

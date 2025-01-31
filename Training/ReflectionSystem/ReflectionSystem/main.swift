@@ -17,4 +17,5 @@ container.register(
 )
 
 let consoleView = ConsoleView(useCase: container.resolve(type: UseCase.self))
+
 consoleView.start()
