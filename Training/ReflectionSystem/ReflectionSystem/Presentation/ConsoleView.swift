@@ -14,13 +14,9 @@ enum MenuOption: Int {
   case deleteReflection
   case listAllReflections
   case exit
-  
-  static func from(_ input: Int) -> MenuOption? {
-    return MenuOption(rawValue: input)
-  }
 }
 
-class ConsoleView {
+final class ConsoleView {
   private let useCase: UseCase
   
   init(useCase: UseCase) {
@@ -43,7 +39,7 @@ class ConsoleView {
     repeat {
       print(Constants.menu, terminator: "")
       let input = Int(readLine() ?? "") ?? -1
-      selectedMenu = MenuOption.from(input)
+      selectedMenu = MenuOption(rawValue: input)
       
       if selectedMenu == nil {
         print("\n1~6 사이의 숫자를 입력해주세요.\n")

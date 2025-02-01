@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UseCaseImpl: UseCase {
+final class UseCaseImpl: UseCase {
   
   let repository: Repository
   
