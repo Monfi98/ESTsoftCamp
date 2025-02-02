@@ -34,10 +34,23 @@ final class ConsoleView {
     } while selectedMenu != .exit
   }
   
-  // 메뉴 선택 처리
+  // 메뉴 선택
   private func selectMenu() {
+    let menuText =
+      """
+      === 회고 시스템 ===
+      1. 회고 추가
+      2. 회고 조회
+      3. 회고 수정
+      4. 회고 삭제
+      5. 전체 회고 목록 출력
+      6. 종료
+      
+      메뉴를 선택하세요: 
+      """
+    
     repeat {
-      print(Constants.menu, terminator: "")
+      print(menuText, terminator: "")
       let input = Int(readLine() ?? "") ?? -1
       selectedMenu = MenuOption(rawValue: input)
       
@@ -46,6 +59,7 @@ final class ConsoleView {
       }
     } while selectedMenu == nil
   }
+  
   
   private func handleMenuSelection(_ menu: MenuOption) {
     switch menu {
@@ -109,13 +123,16 @@ final class ConsoleView {
   private func exit() {
     print("프로그램을 종료합니다.")
   }
+}
+
+extension ConsoleView {
   
   private func askForDate(text: String) -> String {
     var inputDate: String
     repeat {
       print(text, terminator: " ")
       inputDate = readLine() ?? ""
-    } while !Helper.isValidDate(inputDate)
+    } while !isValidDate(inputDate)
     return inputDate
   }
   
@@ -124,5 +141,22 @@ final class ConsoleView {
     print(text, terminator: " ")
     inputContent = readLine() ?? ""
     return inputContent
+  }
+  
+  private func isValidDate(_ dateString: String) -> Bool {
+    
+    // String 유효성 검사
+    let datePattern = #"^\d{4}-\d{2}-\d{2}$"#
+    let regex = try! NSRegularExpression(pattern: datePattern)
+    let range = NSRange(location: 0, length: dateString.utf16.count)
+    guard regex.firstMatch(in: dateString, options: [], range: range) != nil
+    else { return false }
+    
+    // 실제로 있는 날짜인지 검사
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    
+    guard let date = dateFormatter.date(from: dateString) else { return false }
+    return dateFormatter.string(from: date) == dateString
   }
 }
