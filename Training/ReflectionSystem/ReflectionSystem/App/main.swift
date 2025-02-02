@@ -8,7 +8,7 @@
 import Foundation
 
 let container = DIContainer.shared
-container.register(type: Repository.self, component: RepositoryImpl())
+container.register(type: Repository.self, component: InMemoryRepositoryImpl())
 container.register(
   type: UseCase.self,
   component: UseCaseImpl(

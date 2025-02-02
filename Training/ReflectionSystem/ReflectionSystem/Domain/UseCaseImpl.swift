@@ -52,7 +52,7 @@ final class UseCaseImpl: UseCase {
 
   func deleteReflection(stringDate: String) {
     do {
-      try repository.deleteReflection(date: stringDate.toDate!)
+      try repository.deleteReflectionByDate(stringDate.toDate!)
       print("회고가 삭제되었습니다.")
     } catch {
       print(error.localizedDescription)
@@ -61,7 +61,7 @@ final class UseCaseImpl: UseCase {
 
   func listAllReflections() -> [Reflection]? {
     do {
-      return try repository.readAllReflections()
+      return try repository.getAllReflections()
     } catch {
       print(error.localizedDescription)
       return nil

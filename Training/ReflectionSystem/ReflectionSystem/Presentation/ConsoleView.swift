@@ -26,6 +26,19 @@ final class ConsoleView {
   private var selectedMenu: MenuOption?
   
   func start() {
+    
+    let menuText =
+      """
+      === 회고 시스템 ===
+      1. 회고 추가
+      2. 회고 조회
+      3. 회고 수정
+      4. 회고 삭제
+      5. 전체 회고 목록 출력
+      6. 종료
+      """
+    print(menuText)
+    
     repeat {
       selectMenu()
       if let selectedMenu = selectedMenu {
@@ -36,21 +49,9 @@ final class ConsoleView {
   
   // 메뉴 선택
   private func selectMenu() {
-    let menuText =
-      """
-      === 회고 시스템 ===
-      1. 회고 추가
-      2. 회고 조회
-      3. 회고 수정
-      4. 회고 삭제
-      5. 전체 회고 목록 출력
-      6. 종료
-      
-      메뉴를 선택하세요: 
-      """
     
     repeat {
-      print(menuText, terminator: "")
+      print("\n메뉴를 선택하세요: ", terminator: "")
       let input = Int(readLine() ?? "") ?? -1
       selectedMenu = MenuOption(rawValue: input)
       
