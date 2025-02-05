@@ -29,8 +29,8 @@ Choice: 1
  ----- 입름 검색 기능 ----
 */
 
-enum MenuOption {
-  case input
+enum MenuOption: Int {
+  case input = 1
   case output
   case search
   case edit
@@ -45,12 +45,16 @@ final class ContactBook {
   
   func start() {
     
-    print(":::: 전화 번호부 ::::")
     var inputMenuNum: Int?
+    print(":::: 전화 번호부 ::::")
     repeat {
-      inputMenuNum = selectMenu()
-    } while inputMenuNum == nil
-    
+      
+      repeat {
+        inputMenuNum = selectMenu()
+      } while inputMenuNum == nil
+      
+      menu(menu: MenuOption(rawValue: inputMenuNum!)!)
+    } while inputMenuNum != 6
   }
   
   private func selectMenu() -> Int? {
@@ -81,7 +85,7 @@ final class ContactBook {
     case .edit:
       edit()
     case .delete:
-      delet()
+      delete()
     case .end:
       end()
     }
@@ -113,16 +117,48 @@ extension ContactBook {
   private func search() {
     print("----- 검색 기능 -----")
     print("이름 검색 기능입니다.")
+    print("이름: ", terminator: "")
+    let name = readLine() ?? ""
+    
+    if let phoneNum = contact[name] {
+      print("전화번호는 \(phoneNum)입니다.")
+    } else {
+      print("해당하는 전화번호가 없습니다.")
+    }
   }
   
   private func edit() {
     print("----- 수정 기능 -----")
     print("전화 번호 수정 기능입니다.")
+    print("수정하고 싶은 이름: ", terminator: "")
+    let name = readLine() ?? ""
+    
+    guard contact[name] != nil else {
+      print("해당하는 이름이 없습니다.")
+      return
+    }
+    
+    print("전화번호: ", terminator: "")
+    let phoneNum = readLine() ?? ""
+    
+    contact[name] = phoneNum
+    
   }
   
   private func delete() {
     print("----- 삭제 기능 -----")
     print("전화번호부 삭제 기능입니다.")
+    
+    print("삭제하고 싶은 전화번호부 이름: ", terminator: "")
+    let name = readLine() ?? ""
+    
+    guard contact[name] != nil else {
+      print("해당하는 이름이 없습니다.")
+      return
+    }
+    
+    contact.removeValue(forKey: name)
+    
   }
   
   private func end() {
