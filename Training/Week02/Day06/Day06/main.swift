@@ -29,5 +29,8 @@ class Rectangle: Shape {
 let circle = Circle()
 let rectangle = Rectangle()
 
-circle.draw()
-rectangle.draw()
+var shapes: [Shape] = [circle, rectangle]
+
+for shape in shapes {
+  shape.draw()
+}
