@@ -4,7 +4,20 @@ func solution(_ s:String) -> Int {
   let arr = Array(s)
   
   
-  return 0
+  var result = 0
+  for i in 0..<arr.count/8 {
+    var compressed: [String] = []
+    
+    for j in 0..<arr.count/i + 1 {
+      var compareString: [String] = arr[j...j+i]
+      
+    }
+    if result == 0 || result > compressed.count {
+      result = compressed.count
+    }
+  }
+  
+  return result
 }
 
 solution("aabbaccc")
@@ -16,10 +29,13 @@ solution("aabbaccc")
 // 4개 단위로 자른다 aabb/accc
 // 5개 단위로 자른다 -> 불가
 
-// "ababcdcdababcdcd"  9
-// 2 -> 2ab2cd2ab2cd
-// 3 -> aba, bab, bcd, cd
-
+// "ababcdc dabab cdcd"  9
+// 2 -> ab / ab / cd ...
+// 3 ->
+// 4 ->
+// 5 ->
+// 6 ->
+// 7 ->
 
 // "abcabcdede"  8
 // a, b, c
