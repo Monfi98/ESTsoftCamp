@@ -2,11 +2,12 @@ name: Create Issue Branch on Label Assignment
 
 on:
   issues:
-    types: [labeled]  # 이슈에 라벨이 추가될 때 실행
+    types: [labeled]  # 이슈에 Label이 추가될 때 실행
 
 jobs:
   create_issue_branch_job:
     runs-on: ubuntu-latest
+
     steps:
       - name: Extract Issue Number
         id: extract_issue
@@ -16,13 +17,13 @@ jobs:
         id: convert_label
         run: |
           case "${{ github.event.label.name }}" in
+            "⚙️ 설정") LABEL="chore" ;;
+            "✅ 테스트") LABEL="test" ;;
             "✨ 기능") LABEL="feature" ;;
             "🐞 버그") LABEL="bugfix" ;;
-            "⚙️ 설정") LABEL="chore" ;;
             "🔨 리펙토링") LABEL="refactor" ;;
-            "✅ 테스트") LABEL="test" ;;
             "📃 문서") LABEL="docs" ;;
-            *) LABEL="" ;;  # 정의되지 않은 라벨이면 무시
+            *) LABEL="" ;;  # 정의되지 않은 Label이면 빈 값
           esac
           echo "LABEL=$LABEL" >> $GITHUB_ENV
 
@@ -31,6 +32,3 @@ jobs:
         uses: robvanderleek/create-issue-branch@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          branchName: '#${{ env.ISSUE_NUMBER }}'
-          prefix: '${{ env.LABEL }}/'
