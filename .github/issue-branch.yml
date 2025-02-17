@@ -1,15 +1,20 @@
 branchName: '${issue.number}'
 branches:
-  - label: '✨ 기능'
+  - label: '✨ feature'
     prefix: feature/
-  - label: '🐞 버그'
+  - label: '🐞 bug'
     prefix: bugfix/
-  - label: '⚙️ 설정'
+  - label: '⚙️ chore'
     prefix: chore/
-  - label: '🔨 리펙토링'
+  - label: '🔨 refactor'
     prefix: refactor/
-  - label: '✅ 테스트'
+  - label: '✅ test'
     prefix: test/
-  - label: '📃 문서'
+  - label: '📃 docs'
     prefix: docs/
 autoCloseIssue: true
+commentMessage: 'Branch ${branchName} created for issue: ${issue.title}'
+copyIssueLabelsToPR: true
+copyIssueAssigneeToPR: true
+copyIssueProjectsToPR: true
+copyIssueMilestoneToPR: true
