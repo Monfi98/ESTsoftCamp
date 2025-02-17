@@ -12,6 +12,9 @@ struct ContentView: View {
   var body: some View {
     GeometryReader { proxy in
       VStack {
+        
+        Spacer().frame(height: 100)
+        
         Text("\(number)")
         HStack {
           Button("AC", action: {})
@@ -48,7 +51,6 @@ struct ContentView: View {
         }
       }
       .frame(width: proxy.size.width)
-      .background(.red)
     }
   }
 }

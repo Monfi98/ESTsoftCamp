@@ -1,0 +1,15 @@
+branchName: '#${issue.number}'
+branches:
+  - label: '✨ 기능'
+    prefix: feature/
+  - label: '🐞 버그'
+    prefix: bugfix/
+  - label: '⚙️ 설정'
+    prefix: chore/
+  - label: '🔨 리펙토링'
+    prefix: refactor/
+  - label: '✅ 테스트'
+    prefix: test/
+  - label: '📃 문서'
+    prefix: docs/
+autoCloseIssue: true
