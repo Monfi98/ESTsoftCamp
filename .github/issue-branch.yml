@@ -1,4 +1,4 @@
-branchName: '${issue.number}'
+branchName: '#${issue.number}'
 branches:
   - label: '✨ 기능'
     prefix: feature/
