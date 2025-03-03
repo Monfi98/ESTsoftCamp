@@ -1,0 +1,62 @@
+{
+    "weekly_box_office": [
+      {
+        "rank": 1,
+        "title": "하얼빈",
+        "release_date": "2025-01-01",
+        "image_url": "images/haerbin.jpg"
+      },
+      {
+        "rank": 2,
+        "title": "캡틴 아메리카: 브레이브 뉴 월드",
+        "release_date": "2025-02-12",
+        "image_url": "images/captain_america.jpg"
+      },
+      {
+        "rank": 3,
+        "title": "퇴마록",
+        "release_date": "2025-02-21",
+        "image_url": "images/exorcism.jpg"
+      }
+    ],
+    "weekend_box_office": [
+      {
+        "rank": 1,
+        "title": "미키 17",
+        "release_date": "2025-02-28",
+        "image_url": "images/mickey17.jpg"
+      },
+      {
+        "rank": 2,
+        "title": "캡틴 아메리카: 브레이브 뉴 월드",
+        "release_date": "2025-02-12",
+        "image_url": "images/captain_america.jpg"
+      },
+      {
+        "rank": 3,
+        "title": "퇴마록",
+        "release_date": "2025-02-21",
+        "image_url": "images/exorcism.jpg"
+      }
+    ],
+    "daily_box_office": [
+      {
+        "rank": 1,
+        "title": "미키 17",
+        "release_date": "2025-02-28",
+        "image_url": "images/mickey17.jpg"
+      },
+      {
+        "rank": 2,
+        "title": "캡틴 아메리카: 브레이브 뉴 월드",
+        "release_date": "2025-02-12",
+        "image_url": "images/captain_america.jpg"
+      },
+      {
+        "rank": 3,
+        "title": "퇴마록",
+        "release_date": "2025-02-21",
+        "image_url": "images/exorcism.jpg"
+      }
+    ]
+}
