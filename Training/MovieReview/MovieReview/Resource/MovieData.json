@@ -1,62 +1,148 @@
-{
-    "weekly_box_office": [
-      {
-        "rank": 1,
-        "title": "하얼빈",
-        "release_date": "2025-01-01",
-        "image_url": "images/haerbin.jpg"
-      },
-      {
-        "rank": 2,
-        "title": "캡틴 아메리카: 브레이브 뉴 월드",
-        "release_date": "2025-02-12",
-        "image_url": "images/captain_america.jpg"
-      },
-      {
-        "rank": 3,
-        "title": "퇴마록",
-        "release_date": "2025-02-21",
-        "image_url": "images/exorcism.jpg"
-      }
-    ],
-    "weekend_box_office": [
-      {
-        "rank": 1,
-        "title": "미키 17",
-        "release_date": "2025-02-28",
-        "image_url": "images/mickey17.jpg"
-      },
-      {
-        "rank": 2,
-        "title": "캡틴 아메리카: 브레이브 뉴 월드",
-        "release_date": "2025-02-12",
-        "image_url": "images/captain_america.jpg"
-      },
-      {
-        "rank": 3,
-        "title": "퇴마록",
-        "release_date": "2025-02-21",
-        "image_url": "images/exorcism.jpg"
-      }
-    ],
-    "daily_box_office": [
-      {
-        "rank": 1,
-        "title": "미키 17",
-        "release_date": "2025-02-28",
-        "image_url": "images/mickey17.jpg"
-      },
-      {
-        "rank": 2,
-        "title": "캡틴 아메리카: 브레이브 뉴 월드",
-        "release_date": "2025-02-12",
-        "image_url": "images/captain_america.jpg"
-      },
-      {
-        "rank": 3,
-        "title": "퇴마록",
-        "release_date": "2025-02-21",
-        "image_url": "images/exorcism.jpg"
-      }
-    ]
-}
+
+[
+  {
+    "id": "101",
+    "type": "weekly",
+    "title": "하얼빈",
+    "release_date": "2025-01-01",
+    "image_name": "haerbin",
+    "comments": []
+  },
+  {
+    "id": "102",
+    "type": "weekly",
+    "title": "캡틴 아메리카: 브레이브 뉴 월드",
+    "release_date": "2025-02-12",
+    "image_name": "captain_america",
+    "comments": []
+  },
+  {
+    "id": "103",
+    "type": "weekly",
+    "title": "퇴마록",
+    "release_date": "2025-02-21",
+    "image_name": "exorcism",
+    "comments": []
+  },
+  {
+    "id": "201",
+    "type": "weekend",
+    "title": "데드풀 & 울버린",
+    "release_date": "2025-07-26",
+    "image_name": "deadpool_wolverine",
+    "comments": []
+  },
+  {
+    "id": "202",
+    "type": "weekend",
+    "title": "미션 임파서블 8",
+    "release_date": "2025-09-10",
+    "image_name": "mission8",
+    "comments": []
+  },
+  {
+    "id": "203",
+    "type": "weekend",
+    "title": "아바타 3",
+    "release_date": "2025-12-18",
+    "image_name": "avatar3",
+    "comments": []
+  },
+  {
+    "id": "301",
+    "type": "daily",
+    "title": "고질라 X 콩: 뉴 엠파이어",
+    "release_date": "2025-03-29",
+    "image_name": "godzilla_kong",
+    "comments": []
+  },
+  {
+    "id": "302",
+    "type": "daily",
+    "title": "킹스맨: 더 블러디 서클",
+    "release_date": "2025-08-21",
+    "image_name": "kingsman_bloody",
+    "comments": []
+  },
+  {
+    "id": "303",
+    "type": "daily",
+    "title": "스파이더맨: 홈런",
+    "release_date": "2025-10-05",
+    "image_name": "spiderman_homerun",
+    "comments": []
+  },
+  {
+    "id": "304",
+    "type": "weekly",
+    "title": "듄: 파트 2",
+    "release_date": "2025-03-01",
+    "image_name": "dune_part2",
+    "comments": []
+  },
+  {
+    "id": "305",
+    "type": "weekly",
+    "title": "더 배트맨 2",
+    "release_date": "2025-06-17",
+    "image_name": "the_batman2",
+    "comments": []
+  },
+  {
+    "id": "306",
+    "type": "weekly",
+    "title": "가디언즈 오브 갤럭시 Vol.4",
+    "release_date": "2025-09-23",
+    "image_name": "guardians4",
+    "comments": []
+  },
+  {
+    "id": "307",
+    "type": "weekend",
+    "title": "트랜스포머: 라이즈 오브 유니콘",
+    "release_date": "2025-07-08",
+    "image_name": "transformers_unicron",
+    "comments": []
+  },
+  {
+    "id": "308",
+    "type": "weekend",
+    "title": "쥬라기 월드 4",
+    "release_date": "2025-11-15",
+    "image_name": "jurassic_world4",
+    "comments": []
+  },
+  {
+    "id": "309",
+    "type": "weekend",
+    "title": "해리 포터와 저주받은 아이",
+    "release_date": "2025-12-10",
+    "image_name": "harry_potter_cursed_child",
+    "comments": []
+  },
+  {
+    "id": "310",
+    "type": "daily",
+    "title": "앤트맨 4",
+    "release_date": "2025-05-05",
+    "image_name": "antman4",
+    "comments": []
+  },
+  {
+    "id": "311",
+    "type": "daily",
+    "title": "블랙 팬서 3",
+    "release_date": "2025-08-29",
+    "image_name": "black_panther3",
+    "comments": []
+  },
+  {
+    "id": "312",
+    "type": "daily",
+    "title": "아이언맨 4",
+    "release_date": "2025-10-20",
+    "image_name": "ironman4",
+    "comments": []
+  }
+]
+
