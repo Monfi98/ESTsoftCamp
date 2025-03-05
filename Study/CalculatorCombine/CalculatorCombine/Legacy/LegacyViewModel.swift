@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-final class ViewModel {
+final class LegacyViewModel {
   
   struct State {
     var resultNumber: String = "0"

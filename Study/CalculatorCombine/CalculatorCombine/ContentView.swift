@@ -9,8 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
   
-  private var viewModel = ViewModel()
-  @State var number = 0.0
+  @StateObject private var viewModel = CalcViewModel()
   
   var body: some View {
     NavigationStack {
@@ -21,14 +20,14 @@ struct ContentView: View {
           
           Spacer()
           
-          Text(viewModel.state.resultNumber)
+          Text(viewModel.resultNumberText)
             .font(.system(size: 70, weight: .medium))
             .foregroundStyle(.gray05)
             .padding(.trailing, 10)
           
           Spacer().frame(height: 10)
           
-          Text(viewModel.state.expressionText)
+          Text(viewModel.previewText)
             .font(.system(size: 30, weight: .regular))
             .frame(height: 30)
             .foregroundStyle(.gray04)
@@ -38,98 +37,98 @@ struct ContentView: View {
           
           HStack(spacing: 0) {
             Button("AC", action: {
-              viewModel.send(.allClear)
+              viewModel.send(.allClearTapped)
             })
               .buttonStyle(CalculatorButton(type: .special))
             Button("+/-", action: {
-              viewModel.send(.operation(.toggle))
+              
             })
               .buttonStyle(CalculatorButton(type: .special))
             Button("%", action: {
-              viewModel.send(.operation(.percent))
+              
             })
               .buttonStyle(CalculatorButton(type: .special))
             Button("÷", action: {
-              viewModel.send(.operation(.divide))
+              viewModel.send(.operatorTapped("/"))
             })
               .buttonStyle(CalculatorButton(type: .operation))
           }
           
           HStack(spacing: 0) {
             Button("7", action: {
-              viewModel.send(.number("7"))
+              viewModel.send(.numberTapped("7"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("8", action: {
-              viewModel.send(.number("8"))
+              viewModel.send(.numberTapped("8"))
               
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("9", action: {
-              viewModel.send(.number("9"))
+              viewModel.send(.numberTapped("9"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("×", action: {
-              viewModel.send(.operation(.multiply))
+              viewModel.send(.operatorTapped("*"))
             })
               .buttonStyle(CalculatorButton(type: .operation))
           }
           
           HStack(spacing: 0) {
             Button("4", action: {
-              viewModel.send(.number("4"))
+              viewModel.send(.numberTapped("4"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("5", action: {
-              viewModel.send(.number("5"))
+              viewModel.send(.numberTapped("5"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("6", action: {
-              viewModel.send(.number("6"))
+              viewModel.send(.numberTapped("6"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("-", action: {
-              viewModel.send(.operation(.subtract))
+              viewModel.send(.operatorTapped("-"))
             })
               .buttonStyle(CalculatorButton(type: .operation))
           }
           
           HStack(spacing: 0) {
             Button("1", action: {
-              viewModel.send(.number("1"))
+              viewModel.send(.numberTapped("1"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("2", action: {
-              viewModel.send(.number("2"))
+              viewModel.send(.numberTapped("2"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("3", action: {
-              viewModel.send(.number("3"))
+              viewModel.send(.numberTapped("3"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button("+", action: {
-              viewModel.send(.operation(.add))
+              viewModel.send(.numberTapped("+"))
             })
               .buttonStyle(CalculatorButton(type: .operation))
           }
           
           HStack(spacing: 0) {
             Button("0", action: {
-              viewModel.send(.number("0"))
+              viewModel.send(.numberTapped("0"))
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button(".", action: {
-              viewModel.send(.dot)
+              
             })
               .buttonStyle(CalculatorButton(type: .number))
             Button {
-              viewModel.send(.delete)
+              viewModel.send(.deleteTapped)
             } label: {
               Image(systemName: "delete.left")
                 .font(.system(size: 28, weight: .light))
             }.buttonStyle(CalculatorButton(type: .number))
             Button("=", action: {
-              viewModel.send(.equal)
+              viewModel.send(.equalTapped)
             })
               .buttonStyle(CalculatorButton(type: .delete))
           }

@@ -10,9 +10,9 @@ import UIKit
 class DetailViewController: UIViewController {
   
   var movie: Movie?
+  
   @IBOutlet weak var posterImageView: UIImageView!
   @IBOutlet weak var miniPosterImageView: UIImageView!
-  
   @IBOutlet weak var boxofficeLabel: UILabel!
   @IBOutlet weak var movieNameLabel: UILabel!
   @IBOutlet weak var releaseLabel: UILabel!
@@ -27,7 +27,6 @@ class DetailViewController: UIViewController {
   }
   
   private func setupUI() {
-    // 네비게이션 버튼
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       image: UIImage(systemName: "bubble.and.pencil"),
       style: .plain,
@@ -35,11 +34,9 @@ class DetailViewController: UIViewController {
       action: #selector(addReviewButtonTapped)
     )
     
-    // 포스터 이미지 설정
     posterImageView.image = UIImage(named: movie!.imageName) ?? UIImage()
     posterImageView.contentMode = .scaleAspectFill
     
-    // 반투명한 검은색 오버레이 추가
     let overlayView = UIView(frame: posterImageView.bounds)
     overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.65)
     posterImageView.addSubview(overlayView)
