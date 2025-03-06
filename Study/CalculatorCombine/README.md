@@ -93,7 +93,9 @@ final class CalcViewModel: ObservableObject {
 
 이때, Subject는 뭘까?
 
-위를 잘보면 Subject도 프로토콜이며 Publisher 프로토콜을 채택하고 있고, Summary에는 *“stream에 send(_:) 메서드를 호출해서 값을 주입할 수 있는 Publisher이다.”*라고 써져 있다.
+<img width="500" alt="Combine 공부 4" src="https://github.com/user-attachments/assets/19742381-6be7-45f4-bc7e-ff224c207c9b" />
+
+잘보면 Subject도 프로토콜이며 Publisher 프로토콜을 채택하고 있고, Summary에는 *“stream에 send(_:) 메서드를 호출해서 값을 주입할 수 있는 Publisher이다.”*라고 써져 있다.
 
 
 > Subject는 스트림을 만들 수도 있고, 값을 방출할수도 있고, (publisher 프로토콜을 채택하니깐) send() 메서드를 통해 값을 주입할 수도 있구나!
