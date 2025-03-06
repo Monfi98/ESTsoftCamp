@@ -11,7 +11,7 @@ import SwiftUI
 struct CalculatorCombineApp: App {
   var body: some Scene {
     WindowGroup {
-      ContentView()
+      ContentView(viewModel: CalcViewModel())
     }
   }
 }

@@ -8,13 +8,12 @@
 import Foundation
 import Combine
 
-// 사칙연산 구현만을 중심으로 다시 짭니다.
-// 이유: 좀더 가독성 높이고 Combine학습에 좀 더 초점을 둬보기 위해서
-final class CalcViewModel: ObservableObject {
-  @Published var previewText = ""
-  @Published var resultNumberText = ""
+final class CalcViewModel {
   
-  private var operators: Set<Character> = ["+", "-", "*", "/"]
+  let previewTextPublisher = CurrentValueSubject<String, Never>("")
+  let resultNumberPublisher = PassthroughSubject<Int, Never>()
+  
+  private let operators: Set<Character> = ["+", "-", "*", "/"]
   
   enum Action {
     case numberTapped(String)
@@ -33,11 +32,14 @@ final class CalcViewModel: ObservableObject {
       handleOperator(operatorText)
       
     case .deleteTapped:
-      if !previewText.isEmpty { previewText.removeLast() }
+      if !previewTextPublisher.value.isEmpty {
+        previewTextPublisher.value.removeLast()
+      }
       
     case .allClearTapped:
-      resultNumberText = ""
-      previewText = ""
+      previewTextPublisher.send("")
+      resultNumberPublisher.send(0)
+      
     case .equalTapped:
       handleEqual()
     }
@@ -48,29 +50,26 @@ extension CalcViewModel {
   
   private func handleNumber(_ numberText: String) {
     if numberText == "0" {
-      
-      if let lastText = previewText.last, !operators.contains(lastText) {
-        previewText += numberText
+      if let lastText = previewTextPublisher.value.last, !operators.contains(lastText) {
+        previewTextPublisher.value += numberText
       }
     } else {
-      previewText += numberText
+      previewTextPublisher.value += numberText
     }
   }
   
   private func handleOperator(_ operatorText: String) {
-    if let lastText = previewText.last, !operators.contains(lastText) {
-      previewText += operatorText
+    if let lastText = previewTextPublisher.value.last, !operators.contains(lastText) {
+      previewTextPublisher.value += operatorText
     }
   }
   
   private func handleEqual() {
-    guard let lastText = previewText.last, !operators.contains(lastText)
-    else { return }
+    guard let lastText = previewTextPublisher.value.last, !operators.contains(lastText) else { return }
     
-    if let expression = NSExpression(format: previewText) as NSExpression?,
+    if let expression = NSExpression(format: previewTextPublisher.value) as NSExpression?,
        let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
-      resultNumberText = result.stringValue
+      resultNumberPublisher.send(result.intValue)
     }
-    
   }
 }

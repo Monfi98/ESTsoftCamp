@@ -1,82 +1,198 @@
-# CalculatorCombine
+## 실습 순서
 
-### 스크린샷
-<img src="https://github.com/user-attachments/assets/6751515e-0d4f-4ceb-8259-08d612d88f04"  width="300"/>
+### 1. 정수 사칙 연산위주로 뷰모델 변경
 
-### 기능
+일단 편~~안한 학습을 위해 `정수 사칙 연산` 위주 코드로 뷰모델을 변경하였다.
 
-- [x] 숫자 입력 (0-9)
-- [x] 사칙연산 (+, -, ×, ÷)
-- [x] = 버튼을 눌러 수식 계산 (소수점 두 자리까지 표시)
-- [x] 연산자가 연속으로 입력되지 않도록 제한
-- [x] AC (All Clear) 버튼으로 전체 초기화
-- [x] C (Delete) 버튼으로 최근 입력 삭제
-- [x] 정수 연산뿐만 아니라 실수 연산 지원
-- [ ] % (퍼센트) 기능
-- [ ] -/+ (부호 전환) 기능
-- [ ] . (소수점 입력) 기능
+- `CalcViewModel.swift`
+    
+    ```swift
+    final class CalcViewModel: ObservableObject {
+    
+      @Published var previewText = ""
+      @Published var resultNumberText = ""
+      
+      private var operators: Set<Character> = ["+", "-", "*", "/"]
+      
+      enum Action {
+        case numberTapped(String)
+        case operatorTapped(String)
+        case deleteTapped
+        case allClearTapped
+        case equalTapped
+      }
+      
+      func send(_ action: Action) {
+        switch action {
+        case .numberTapped(let numberText):
+          handleNumber(numberText)
+          
+        case .operatorTapped(let operatorText):
+          handleOperator(operatorText)
+          
+        case .deleteTapped:
+          if !previewText.isEmpty { previewText.removeLast() }
+          
+        case .allClearTapped:
+          resultNumberText = ""
+          previewText = ""
+          
+        case .equalTapped:
+          handleEqual()
+        }
+      }
+    }
+    
+    extension CalcViewModel {
+      
+      private func handleNumber(_ numberText: String) {
+        if numberText == "0" {
+          
+          if let lastText = previewText.last, !operators.contains(lastText) {
+            previewText += numberText
+          }
+        } else {
+          previewText += numberText
+        }
+      }
+      
+      private func handleOperator(_ operatorText: String) {
+        if let lastText = previewText.last, !operators.contains(lastText) {
+          previewText += operatorText
+        }
+      }
+      
+      private func handleEqual() {
+        guard let lastText = previewText.last, !operators.contains(lastText)
+        else { return }
+        
+        if let expression = NSExpression(format: previewText) as NSExpression?,
+           let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
+          resultNumberText = result.stringValue
+        }
+        
+      }
+    }
+    ```
+    
 
----
+### 2. `@Published`부터 바꿔보자
 
-- [ ] 버튼 애니메이션
-- [ ] 저장 기능
-
-### 예외 사항
-
-- [x] 연산자가 연속으로 입력되지 않도록 제한
-- [x] 계산식이 비어있을 때 = 버튼을 눌러도 크래시 방지
-- [x] 0이 맨 앞에 올 수 없도록 처리
-- [x] 소수점 연산 가능하도록 Double 변환 적용
-- [x] 연산자 맨 앞 입력 방지
-- [ ] 연산자가 마지막에 올 경우 = 눌렀을 때 예외 처리 필요
-- [ ] .(소수점) 입력 시 연속 입력 방지 필요
-- [ ] 5 / 0 같은 나눗셈 예외 처리 필요
-- [ ] 현재 수식에서 연산자 교체 기능 필요
-- [ ] 부호 전환(-/+)이 숫자에만 적용되도록 처리 필요
-
-
-### 코드 설명
 ```swift
-  /// 숫자 입력을 처리하는 함수
-  private func handleNumberInput(_ number: String) {
-    if state.expressionText == "0" {
-      state.expressionText = number // 0이 맨 앞에 오지 않도록
-    } else {
-      state.expressionText += number // 숫자 추가
-    }
-    recentInput = number
-  }
+import Foundation
+import Combine
 
-  /// 연산자 입력을 처리하는 함수 (연산자가 연속으로 입력되지 않도록 방지)
-  private func handleOperationInput(_ type: OperationType) {
-    if recentInput.isEmpty || isOperator(recentInput) {
-      return // 이전 입력이 비어있거나 연산자이면 추가하지 않기
-    }
-    
-    state.expressionText += type.rawValue // 연산자 추가
-    recentInput = type.rawValue
-  }
+final class CalcViewModel: ObservableObject {
 
-  /// 입력된 수식을 계산하는 함수
-  private func calculateExpression() {
-    if state.expressionText.isEmpty || isOperator(recentInput) {
-      return // 빈 수식이거나 연산자로 끝나면 계산하지 않음
-    }
-    
-    let modifiedExpression = state.expressionText
-      .replacingOccurrences(of: "(?<=\\d)(?=\\D)", with: ".0", options: .regularExpression) // TODO: 정수 연산을 실수로 변환인데 코드 좀더 봐야함..
-
-    let expression = NSExpression(format: modifiedExpression)
-
-    if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
-      state.resultNumber = String(format: "%.2f", result.doubleValue)
-    } else {
-      state.resultNumber = "0" // 계산 오류 시 0으로 설정
-    }
-  }
-
-  /// 입력된 문자열이 연산자인지 확인하는 함수
-  private func isOperator(_ text: String) -> Bool {
-    return ["+", "-", "*", "/"].contains(text)
-  }
+  let previewTextPublisher = CurrentValueSubject<String, Never>("")
+  let resultNumberPublisher = PassthroughSubject<Int, Never>()
+  
+  // ... code
+}
 ```
+
+이때, Subject는 뭘까?
+
+위를 잘보면 Subject도 프로토콜이며 Publisher 프로토콜을 채택하고 있고, Summary에는 *“stream에 send(_:) 메서드를 호출해서 값을 주입할 수 있는 Publisher이다.”*라고 써져 있다.
+
+
+> Subject는 스트림을 만들 수도 있고, 값을 방출할수도 있고, (publisher 프로토콜을 채택하니깐) send() 메서드를 통해 값을 주입할 수도 있구나!
+
+(Combine을 사용하지 않던 코드에 Combine 모델을 적용하고 싶을 때 사용하면 좋다고함-참고1번)
+
+Subject를 채택한 객체는 두 가지 종류가 있다.
+
+1. **PassthroughSubject**
+    
+    이름에서 알 수 있다 시피 값을 스쳐보내는 쿨한 녀석 이라고 생각하면된다. 정의도 살펴보면 딱히 초기값도 필요 없으며 최신 값을 저장하기 위한 공간도 없다고 되어있다.
+    
+2. **CurrentValueSubject**
+    
+    Passthroughsubject와 다르게 가장 최근에 published된 값의 버퍼를 유지한다고 한다. 
+    
+
+내 코드에서
+
+`resultNumberText`는 이전값 필요없기 때문에 Passthroughsubject를 `previewText`는 이전 값이 operator가 마지막에 있는지, empty인지 확인하기 위해서 필요하기 때문에 CurrentValueSubject를 썼다.
+
+### 3. 뷰모델 내부함수
+
+```swift
+extension CalcViewModel {
+  
+  private func handleNumber(_ numberText: String) {
+    if numberText == "0" {
+      if let lastText = previewTextPublisher.value.last, !operators.contains(lastText) {
+        previewTextPublisher.value += numberText
+      }
+    } else {
+      previewTextPublisher.value += numberText
+    }
+  }
+  
+  private func handleOperator(_ operatorText: String) {
+    if let lastText = previewTextPublisher.value.last, !operators.contains(lastText) {
+      previewTextPublisher.value += operatorText
+    }
+  }
+  
+  private func handleEqual() {
+    guard let lastText = previewTextPublisher.value.last, !operators.contains(lastText) else { return }
+    
+    if let expression = NSExpression(format: previewTextPublisher.value) as NSExpression?,
+       let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
+      resultNumberPublisher.send(result.intValue)
+    }
+  }
+}
+```
+
+- `resultNumberPublisher.send(result.stringValue)`
+    
+    요거는 위에서 설명했던 `send` 메서드
+    
+- `previewTextPublisher.value += operatorText`
+    
+    CurrentValueSubject인 previewTextPublisher는 value를 바꿔주면 알아서 값이 방출된다고 한다.
+    
+
+### 4. 뷰에서 구독을 해보자
+
+```swift
+import SwiftUI
+import Combine
+
+struct ContentView: View {
+  
+  @StateObject private var viewModel = CalcViewModel()
+
+  @State private var resultNumberText = "0"
+  @State private var previewText = ""
+  
+  @State private var cancellableBag = Set<AnyCancellable>()
+  
+  // code ..
+  
+  .onAppear {
+	  // 뷰가 나타날때 State변수와 바인딩
+    viewModel.resultNumberPublisher
+		    .map { String($0) }
+	      .sink { resultNumberText = $0 }
+	      .store(in: &cancellableBag)
+	      
+    viewModel.previewTextPublisher
+        .assign(to: \.previewText, on: self)
+        .store(in: &cancellableBag)
+  }
+}
+```
+
+- `.map { String($0) }` → Int로 들어오는 값을 String으로 변환해주는 Operator
+- `.sink { previewText = $0 }` → Publisher가 방출한 값을 구독, 값을 방출하면 넣어주는 역할
+- `.assign(to: \.previewText, on: self)` → 위 `.sink`와 다르게 값을 바로 할당할 수 있다
+- `.store(in: &cancellableBag)` → 뷰가 사라질때 자동으로 구독을 해제
+
+## 참고
+
+- https://icksw.tistory.com/274
+- https://dongdida.tistory.com/174?category=1157927

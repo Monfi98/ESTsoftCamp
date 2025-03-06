@@ -6,10 +6,20 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
   
-  @StateObject private var viewModel = CalcViewModel()
+  private var viewModel: CalcViewModel
+  
+  init(viewModel: CalcViewModel) {
+    self.viewModel = viewModel
+  }
+  
+  @State private var resultNumberText = "0"
+  @State private var previewText = ""
+  
+  @State private var cancellableBag = Set<AnyCancellable>()
   
   var body: some View {
     NavigationStack {
@@ -20,14 +30,14 @@ struct ContentView: View {
           
           Spacer()
           
-          Text(viewModel.resultNumberText)
+          Text(resultNumberText)
             .font(.system(size: 70, weight: .medium))
             .foregroundStyle(.gray05)
             .padding(.trailing, 10)
           
           Spacer().frame(height: 10)
           
-          Text(viewModel.previewText)
+          Text(previewText)
             .font(.system(size: 30, weight: .regular))
             .frame(height: 30)
             .foregroundStyle(.gray04)
@@ -144,10 +154,20 @@ struct ContentView: View {
           }
         }
       }
+      .onAppear {
+        viewModel.previewTextPublisher
+          .assign(to: \.previewText, on: self)
+          .store(in: &cancellableBag)
+      
+        viewModel.resultNumberPublisher
+          .map { String($0) }
+          .sink { resultNumberText = $0 }
+          .store(in: &cancellableBag)
+      }
     }
   }
 }
 
 #Preview {
-  ContentView()
+  ContentView(viewModel: CalcViewModel())
 }
