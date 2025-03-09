@@ -47,7 +47,7 @@ final class MainViewController: UIViewController {
     frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()
   ).then {
     let layout = UICollectionViewFlowLayout().then {
-      $0.minimumLineSpacing = 0
+      $0.minimumLineSpacing = 10
       $0.scrollDirection = .vertical
       $0.sectionInset = .zero
     }
@@ -97,7 +97,7 @@ final class MainViewController: UIViewController {
     
     segmentedControl.snp.makeConstraints {
       $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
-      $0.trailing.equalToSuperview().offset(-24)
+      $0.centerX.equalToSuperview()
     }
     
     tableView.snp.makeConstraints {
@@ -178,9 +178,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let itemSpacing : CGFloat = 10
-    
     let myWidth : CGFloat = (collectionView.bounds.width - itemSpacing * 2) / 3
-    
     
     return CGSize(width: myWidth, height: myWidth)
   }

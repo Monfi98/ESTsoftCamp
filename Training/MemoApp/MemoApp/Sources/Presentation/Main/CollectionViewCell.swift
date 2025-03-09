@@ -15,6 +15,7 @@ class CollectionViewCell: UICollectionViewCell {
   lazy var image = UIImageView().then {
     $0.image = UIImage(systemName: "photo.artframe")
     $0.contentMode = .scaleAspectFill
+    $0.clipsToBounds = true
   }
   
   // MARK: - init

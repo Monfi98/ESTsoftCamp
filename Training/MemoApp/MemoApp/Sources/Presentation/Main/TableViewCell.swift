@@ -18,6 +18,7 @@ class TableViewCell: UITableViewCell {
   lazy var image = UIImageView().then {
     $0.image = UIImage(systemName: "photo.artframe")
     $0.contentMode = .scaleAspectFill
+    $0.clipsToBounds = true
   }
   
   lazy var dateLabel = UILabel().then {
