@@ -19,11 +19,17 @@ enum ViewType: Int {
 final class MainViewController: UIViewController {
   
   // MARK: - Properties
-  
+  private var memos: [Memo] = []
   
   // MARK: - UI Component
+  private lazy var addButton = UIBarButtonItem().then {
+    $0.image = UIImage(systemName: "plus")
+    $0.target = self
+    $0.action = #selector(addButtonTapped)
+  }
+  
   private lazy var segmentedControl = UISegmentedControl(
-    items: ["리스트", "앨범"]
+    items: ["Table View", "Collection View"]
   ).then {
     $0.selectedSegmentIndex = 0
     $0.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
@@ -34,6 +40,7 @@ final class MainViewController: UIViewController {
       TableViewCell.self,
       forCellReuseIdentifier: TableViewCell.identifier
     )
+    $0.rowHeight = 106
   }
   
   private lazy var collectionView = UICollectionView(
@@ -51,17 +58,31 @@ final class MainViewController: UIViewController {
       forCellWithReuseIdentifier: CollectionViewCell.identifier
     )
   }
-
+  
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .systemBackground
+    
+    memos = CoreDataManager.shared.fetchMemos()
+    
     setup()
     setLayouts()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    
+    memos = CoreDataManager.shared.fetchMemos()
+    
+    tableView.reloadData()
+    collectionView.reloadData()
+  }
+  
   // MARK: - setup
   private func setup() {
+    title = "Memo"
+    view.backgroundColor = .systemBackground
+    navigationItem.rightBarButtonItem = addButton
+    
     tableView.dataSource = self
     tableView.delegate = self
     collectionView.dataSource = self
@@ -69,6 +90,7 @@ final class MainViewController: UIViewController {
   }
   
   private func setLayouts() {
+    
     view.addSubview(segmentedControl)
     view.addSubview(tableView)
     view.addSubview(collectionView)
@@ -105,12 +127,17 @@ extension MainViewController {
       collectionView.isHidden = false
     }
   }
+  
+  @objc private func addButtonTapped(_ sender: UIBarButtonItem) {
+    let nextVC = DetailViewController()
+    navigationController?.pushViewController(nextVC, animated: true)
+  }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return 10
+    return memos.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,23 +145,34 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
       withIdentifier: TableViewCell.identifier,
       for: indexPath
     ) as! TableViewCell
-      return cell
+    cell.previewLabel.text = memos[indexPath.row].content
+    cell.dateLabel.text = memos[indexPath.row].createAt?.formattedDate
+    cell.image.image = UIImage(data: memos[indexPath.row].image!)
+    return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      print("select \(indexPath.row)")
+    let nextVC = DetailViewController()
+    nextVC.viewType = .edit
+    nextVC.id = memos[indexPath.row].id
+    nextVC.image = UIImage(data: memos[indexPath.row].image!)
+    nextVC.img.image = UIImage(data: memos[indexPath.row].image!)
+    nextVC.dateLabel.text = memos[indexPath.row].createAt?.formattedDate
+    nextVC.textView.text = memos[indexPath.row].content
+    navigationController?.pushViewController(nextVC, animated: true)
   }
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
+    return memos.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
       return UICollectionViewCell()
     }
+    cell.image.image = UIImage(data: memos[indexPath.row].image!)
     return cell
   }
   
@@ -145,5 +183,15 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegate
     
     
     return CGSize(width: myWidth, height: myWidth)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let nextVC = DetailViewController()
+    nextVC.id = memos[indexPath.row].id
+    nextVC.image = UIImage(data: memos[indexPath.row].image!)
+    nextVC.img.image = UIImage(data: memos[indexPath.row].image!)
+    nextVC.dateLabel.text = memos[indexPath.row].createAt?.formattedDate
+    nextVC.textView.text = memos[indexPath.row].content
+    navigationController?.pushViewController(nextVC, animated: true)
   }
 }

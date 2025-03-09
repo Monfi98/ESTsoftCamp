@@ -15,25 +15,21 @@ class TableViewCell: UITableViewCell {
   static let identifier = "MemoCell"
   
   // MARK: - UI Component
-  lazy private var image = UIImageView().then {
+  lazy var image = UIImageView().then {
     $0.image = UIImage(systemName: "photo.artframe")
     $0.contentMode = .scaleAspectFill
   }
   
-  lazy private var titleLabel = UILabel().then {
-    $0.text = "타이틀이 들어갈 자리 입니다."
-  }
-  
-  lazy private var dateLabel = UILabel().then {
+  lazy var dateLabel = UILabel().then {
     $0.text = "날짜가 들어갈 자리입니다."
   }
   
-  lazy private var previewLabel = UILabel().then {
+  lazy var previewLabel = UILabel().then {
     $0.text = "프리뷰가 들어갈 자리입니다."
   }
   
   lazy private var stackView = UIStackView(
-    arrangedSubviews: [titleLabel, dateLabel, previewLabel]
+    arrangedSubviews: [dateLabel, previewLabel]
   ).then {
     $0.axis = .vertical
     $0.distribution = .equalSpacing
@@ -64,7 +60,8 @@ class TableViewCell: UITableViewCell {
     stackView.snp.makeConstraints {
       $0.leading.equalTo(image.snp.trailing).offset(20)
       $0.trailing.equalToSuperview().offset(10)
-      $0.verticalEdges.equalToSuperview().inset(10)
+      $0.verticalEdges.equalToSuperview().inset(30)
     }
+    
   }
 }

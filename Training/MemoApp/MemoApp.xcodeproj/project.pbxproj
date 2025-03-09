@@ -20,6 +20,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
+				Sources/Data/Model/Memo.xcdatamodeld,
 			);
 			target = 35ACC0982D7C6C840049D429 /* MemoApp */;
 		};

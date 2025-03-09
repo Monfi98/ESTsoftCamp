@@ -8,10 +8,11 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
+  
   static let identifier = "ImageCell"
   
   // MARK: - UI Component
-  lazy private var image = UIImageView().then {
+  lazy var image = UIImageView().then {
     $0.image = UIImage(systemName: "photo.artframe")
     $0.contentMode = .scaleAspectFill
   }
@@ -31,9 +32,7 @@ class CollectionViewCell: UICollectionViewCell {
     contentView.addSubview(image)
     
     image.snp.makeConstraints {
-      $0.width.height.equalTo(86)
-      $0.leading.equalToSuperview().offset(10)
-      $0.verticalEdges.equalToSuperview().inset(10)
+      $0.edges.equalToSuperview()
     }
   }
 }
