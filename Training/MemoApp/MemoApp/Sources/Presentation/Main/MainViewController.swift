@@ -134,6 +134,7 @@ extension MainViewController {
   }
 }
 
+// MARK: - TableViewDelegate
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -163,6 +164,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
   }
 }
 
+// MARK: - CollectionViewDelegate
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return memos.count
