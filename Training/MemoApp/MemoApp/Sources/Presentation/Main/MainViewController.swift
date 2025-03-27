@@ -19,6 +19,8 @@ enum ViewType: Int {
 final class MainViewController: UIViewController {
   
   // MARK: - Properties
+  private let mainVM = MainViewModel()
+  private let input: PassthroughSubject<MainViewModel.Input, Never> = .init()
   private var memos: [Memo] = []
   
   // MARK: - UI Component
@@ -66,10 +68,14 @@ final class MainViewController: UIViewController {
     memos = CoreDataManager.shared.fetchMemos()
     
     setup()
+    bind()
     setLayouts()
   }
   
+  
   override func viewWillAppear(_ animated: Bool) {
+    
+    input.send(.onAppear)
     
     memos = CoreDataManager.shared.fetchMemos()
     
@@ -87,6 +93,17 @@ final class MainViewController: UIViewController {
     tableView.delegate = self
     collectionView.dataSource = self
     collectionView.delegate = self
+  }
+  
+  private func bind() {
+    let output = mainVM.transform(input: input.eraseToAnyPublisher())
+    output.receive(on: DispatchQueue.main)
+      .sink { event in
+        switch event {
+        case .loadMemoDatas()
+        case .pushToDetailView
+        }
+      }
   }
   
   private func setLayouts() {
