@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35E92FEA2D9F5B0F00155936 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35E92FE92D9F5B0F00155936 /* GoogleService-Info.plist */; };
 		35E92FED2D9F5C3100155936 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 35E92FEC2D9F5C3100155936 /* FirebaseDatabase */; };
 		35E92FEF2D9F5C3200155936 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 35E92FEE2D9F5C3200155936 /* FirebaseFirestore */; };
 		35E92FF12D9F5C3200155936 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 35E92FF02D9F5C3200155936 /* FirebaseFirestoreCombine-Community */; };
@@ -17,7 +16,6 @@
 
 /* Begin PBXFileReference section */
 		35E92FC82D9E4FAB00155936 /* FirebaseDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		35E92FE92D9F5B0F00155936 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -49,7 +47,6 @@
 			children = (
 				35E92FCA2D9E4FAB00155936 /* FirebaseDiary */,
 				35E92FC92D9E4FAB00155936 /* Products */,
-				35E92FE92D9F5B0F00155936 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,7 +130,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35E92FEA2D9F5B0F00155936 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
