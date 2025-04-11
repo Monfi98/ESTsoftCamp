@@ -14,7 +14,7 @@ struct FirebaseDiaryApp: App {
   
   var body: some Scene {
     WindowGroup {
-      AppCoordinator{
+      AppCoordinator {
         LoginView()
       }
     }

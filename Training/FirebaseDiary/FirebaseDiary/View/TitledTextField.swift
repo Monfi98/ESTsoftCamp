@@ -22,6 +22,7 @@ struct TitledTextField: View {
       Text(title)
         .font(.system(size: 18, weight: .regular))
       TextField(title + "를 입력해주세요.", text: $text)
+        .autocorrectionDisabled()
         .textFieldStyle(OutlinedTextFieldStyle())
     }
   }

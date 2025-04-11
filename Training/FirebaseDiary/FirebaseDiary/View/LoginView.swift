@@ -42,7 +42,7 @@ struct LoginView: View {
               .font(.system(size: 18))
           }
         }.padding(.top, 10)
-
+        
       }
       .padding(.horizontal, 24)
       .navigationTitle("로그인")
@@ -54,4 +54,5 @@ struct LoginView: View {
 
 #Preview {
   LoginView()
+    .environment(Coordinator<Destination>())
 }
